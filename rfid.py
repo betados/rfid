@@ -19,6 +19,8 @@ class Reader(object):
         while not self.done:
             self.__code = raw_input('Pase su tarjeta')
             print 'Your code is:', self.__code
+            if self.__code == 'exit':
+                break
 
 
 reader = Reader()
@@ -26,3 +28,5 @@ reader = Reader()
 while True:
     time.sleep(0.5)
     print 'Hago otras mierdas'
+    if reader.code == 'exit':
+        break
