@@ -2,21 +2,27 @@ import threading
 import time
 
 
-def read():
-    code = raw_input('Pase su tarjeta')
-    print 'Your code is:', code
+class Reader(object):
+    def __init__(self):
+        self.__code = None
+        self.__t = None
+        self.done = False
+
+        t = threading.Thread(target=self.read)
+        t.start()
+
+    @property
+    def code(self):
+        return self.__code
+
+    def read(self):
+        while not self.done:
+            self.__code = raw_input('Pase su tarjeta')
+            print 'Your code is:', self.__code
 
 
-def run_read():
-    t = threading.Thread(target=read)
-    t.start()
-    return t
-
-
-t = run_read()
+reader = Reader()
 
 while True:
-    if not t.isAlive():
-        t = run_read()
     time.sleep(0.5)
     print 'Hago otras mierdas'
